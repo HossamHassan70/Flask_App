@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>Users</title>
+{% endblock %}
+
+{% block body %}
+{% if users %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% for element in users[0].keys() %}
+            <th scope="col">{{ element|e }}</th>
+            {% endfor %}
+            <th colspan="2">Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            {% for element in user.values() %}
+            <td>{{ element }}</td>
+            {% endfor %}
+            <td><a class="btn btn-danger" href="{{ url_for('del_user', id=user._id) }}">Delete</a></td>
+            <td><a class="btn btn-primary" href="{{ url_for('update_user', id=user._id) }}">Edit</a> </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<h2 class="no-users">No users available</h2>
+
+{% endif %}
+
+<div class="create">
+    <a class="btn btn-success create-btn" href="{{ url_for('create_user') }}">Create a New Student</a>
+</div>
+
+{% endblock %}
